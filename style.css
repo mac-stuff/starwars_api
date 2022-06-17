@@ -1,0 +1,90 @@
+body {
+  background: url(bcgrnd.jpeg) no-repeat;
+  background-attachment: fixed;
+}
+
+.logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.buttons {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.main {
+  text-align: center;
+}
+
+.nav {
+  text-align: center;
+}
+
+.card {
+  color: aliceblue;
+}
+
+.content {
+  color: #ffe54c;
+}
+
+.table {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.button-52 {
+  font-size: 16px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  padding: 13px 20px 13px;
+  margin: 10px 10px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-52:after {
+  content: "";
+  background-color: #ffe54c;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+  transition: 0.2s;
+}
+
+.button-52:hover:after {
+  top: 0px;
+  left: 0px;
+}
+
+@media (min-width: 768px) {
+  .button-52 {
+    padding: 13px 50px 13px;
+  }
+}
+
+tr,
+th,
+td {
+  font-size: 20px;
+  color: #ffe54c;
+  padding: 13px 50px 13px;
+  text-align: center;
+}
+
+.footer {
+  padding: 15px;
+  margin: 15px;
+  color: #ffe54c;
+  background: rgba(255, 255, 255, 0.2);
+}
