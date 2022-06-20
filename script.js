@@ -1,200 +1,220 @@
-async function asyncFetch(value) {
-  const result = await fetch(`https://swapi.dev/api/${value}/`);
+window.onload = createButtons;
+
+async function createButtons() {
+  const result = await fetch(`https://swapi.dev/api/`);
   const data = await result.json();
-  displayResults(data, value);
+
+  const buttons = document.getElementById("buttons");
+  Object.entries(data).map(([key, value]) => {
+    const button = document.createElement("button");
+    button.setAttribute("class", "button-52");
+    button.innerHTML = key;
+    buttons.appendChild(button);
+  });
+
+  document.querySelector("#buttons").addEventListener("click", (e) => {
+    displayResults(e.target.textContent.trim().toLowerCase());
+  });
 }
 
-document.querySelector("#buttons").addEventListener("click", (e) => {
-  asyncFetch(e.target.textContent.trim().toLowerCase());
-});
-
-function displayResults(data, value) {
+async function displayResults(value) {
+  const result = await fetch(`https://swapi.dev/api/${value}/`);
+  const data = await result.json();
   console.log(data);
-  let output = ``;
-
-  if (value === "films") {
-    output += `
-    <tr>
-      <th>index</th>
-      <th>title</th>
-      <th>director</th>
-      <th>producer</th>
-      <th>release_date</th>
-    </tr>`;
-    data.results.forEach((item, index) => {
-      const film = new Film(
-        index,
-        item.title,
-        item.director,
-        item.producer,
-        item.release_date
-      );
-      output += `
-      <tr>
-        <td>${film.index + 1}</td>
-        <td>${film.title}</td>
-        <td>${film.director}</td>
-        <td>${film.producer}</td>
-        <td>${film.release_date}</td>
-      </tr>`;
-    });
-  }
 
   if (value === "people") {
-    output += `
-    <tr>
-      <th>index</th>
-      <th>name</th>
-      <th>height</th>
-      <th>birth year</th>
-      <th>skin color</th>
-    </tr>`;
+    cleanTable();
+
+    const categories = [
+      "index",
+      "name",
+      "height",
+      "birth_year",
+      "skin_color",
+      "created",
+    ];
+    createHeader(categories);
+
     data.results.forEach((item, index) => {
       const person = new Person(
         index,
         item.name,
         item.height,
         item.birth_year,
-        item.skin_color
+        item.skin_color,
+        item.created
       );
-      output += `
-    <tr>
-      <td>${person.index + 1}</td>
-      <td>${person.name}</td>
-      <td>${person.height}</td>
-      <td>${person.birth_year}</td>
-      <td>${person.skin_color}</td>
-    </tr>`;
+      createContent(categories, person);
     });
   }
 
   if (value === "planets") {
-    output += `
-    <tr>
-      <th>index</th>
-      <th>name</th>
-      <th>orbital period</th>
-      <th>gravity</th>
-      <th>population</th>
-    </tr>`;
+    cleanTable();
+
+    const categories = [
+      "index",
+      "name",
+      "orbital_period",
+      "gravity",
+      "population",
+      "created",
+    ];
+    createHeader(categories);
+
     data.results.forEach((item, index) => {
       const planet = new Planet(
         index,
         item.name,
         item.orbital_period,
         item.gravity,
-        item.population
+        item.population,
+        item.created
       );
-      output += `
-      <tr>
-        <td>${planet.index + 1}</td>
-        <td>${planet.name}</td>
-        <td>${planet.orbital_period}</td>
-        <td>${planet.gravity}</td>
-        <td>${planet.population}</td>
-      </tr>`;
+      createContent(categories, planet);
+    });
+  }
+
+  if (value === "films") {
+    cleanTable();
+    const categories = [
+      "index",
+      "title",
+      "director",
+      "producer",
+      "release_date",
+      "created",
+    ];
+    createHeader(categories);
+
+    data.results.forEach((item, index) => {
+      const film = new Film(
+        index,
+        item.title,
+        item.director,
+        item.producer,
+        item.release_date,
+        item.created
+      );
+      createContent(categories, film);
     });
   }
 
   if (value === "species") {
-    output += `
-    <tr>
-      <th>index</th>
-      <th>name</th>
-      <th>classification</th>
-      <th>designation</th>
-      <th>eye colors</th>
-    </tr>`;
+    cleanTable();
+
+    const categories = [
+      "index",
+      "name",
+      "classification",
+      "designation",
+      "eye_colors",
+      "created",
+    ];
+    createHeader(categories);
+
     data.results.forEach((item, index) => {
       const specie = new Specie(
         index,
         item.name,
         item.classification,
         item.designation,
-        item.eye_colors
+        item.eye_colors,
+        item.created
       );
-      output += `
-      <tr>
-        <td>${specie.index + 1}</td>
-        <td>${specie.name}</td>
-        <td>${specie.classification}</td>
-        <td>${specie.designation}</td>
-        <td>${specie.eye_colors}</td>
-      </tr>`;
-    });
-  }
-
-  if (value === "starships") {
-    output += `
-    <tr>
-      <th>index</th>
-      <th>name</th>
-      <th>model</th>
-      <th>manufacturer</th>
-      <th>passengers</th>
-    </tr>`;
-    data.results.forEach((item, index) => {
-      const starship = new Starship(
-        index,
-        item.name,
-        item.model,
-        item.manufacturer,
-        item.passengers
-      );
-      output += `
-      <tr>
-        <td>${starship.index + 1}</td>
-        <td>${starship.name}</td>
-        <td>${starship.model}</td>
-        <td>${starship.manufacturer}</td>
-        <td>${starship.passengers}</td>
-      </tr>`;
+      createContent(categories, specie);
     });
   }
 
   if (value === "vehicles") {
-    output += `
-    <tr>
-      <th>index</th>
-      <th>name</th>
-      <th>model</th>
-      <th>manufacturer</th>
-      <th>cost_in_credits</th>
-    </tr>`;
+    cleanTable();
+
+    const categories = [
+      "index",
+      "name",
+      "model",
+      "manufacturer",
+      "length",
+      "created",
+    ];
+    createHeader(categories);
+
     data.results.forEach((item, index) => {
       const vehicle = new Vehicle(
         index,
         item.name,
         item.model,
         item.manufacturer,
-        item.cost_in_credits
+        item.length,
+        item.created
       );
-      output += `
-    <tr>
-      <td>${vehicle.index + 1}</td>
-      <td>${vehicle.name}</td>
-      <td>${vehicle.model}</td>
-      <td>${vehicle.manufacturer}</td>
-      <td>${vehicle.cost_in_credits}</td>
-    </tr>
-      `;
+      createContent(categories, vehicle);
     });
   }
-  results.innerHTML = output;
-}
 
-class Film {
-  constructor(index, title, director, producer, release_date) {
-    this.index = index;
-    this.title = title;
-    this.director = director;
-    this.producer = producer;
-    this.release_date = release_date;
+  if (value === "starships") {
+    cleanTable();
+
+    const categories = [
+      "index",
+      "name",
+      "model",
+      "manufacturer",
+      "passengers",
+      "created",
+    ];
+    createHeader(categories);
+
+    data.results.forEach((item, index) => {
+      const starship = new Starship(
+        index,
+        item.name,
+        item.model,
+        item.manufacturer,
+        item.passengers,
+        item.created
+      );
+      createContent(categories, starship);
+    });
   }
 }
 
-class Person {
-  constructor(index, name, height, birth_year, skin_color) {
+function createHeader(categories) {
+  const table = document.getElementById("table-content");
+  const tr = document.createElement("tr");
+  for (const category of categories) {
+    const th = document.createElement("th");
+    th.setAttribute("class", "th");
+    th.innerHTML = category;
+    tr.appendChild(th);
+    table.appendChild(tr);
+  }
+}
+
+function createContent(categories, object) {
+  const table = document.getElementById("table-content");
+  const tr = document.createElement("tr");
+  for (let i = 0; i < categories.length; i++) {
+    const td = document.createElement("td");
+    td.setAttribute("class", "td");
+    td.innerHTML = object[categories[i]];
+    tr.appendChild(td);
+    table.appendChild(tr);
+  }
+}
+
+function cleanTable() {
+  document.getElementById("table-content").innerHTML = "";
+}
+
+class Base {
+  constructor(created) {
+    this.created = created.substring(0, 10);
+  }
+}
+
+class Person extends Base {
+  constructor(index, name, height, birth_year, skin_color, created) {
+    super(created);
     this.index = index;
     this.name = name;
     this.height = height;
@@ -203,8 +223,9 @@ class Person {
   }
 }
 
-class Planet {
-  constructor(index, name, orbital_period, gravity, population) {
+class Planet extends Base {
+  constructor(index, name, orbital_period, gravity, population, created) {
+    super(created);
     this.index = index;
     this.name = name;
     this.orbital_period = orbital_period;
@@ -213,8 +234,20 @@ class Planet {
   }
 }
 
-class Specie {
-  constructor(index, name, classification, designation, eye_colors) {
+class Film extends Base {
+  constructor(index, title, director, producer, release_date, created) {
+    super(created);
+    this.index = index;
+    this.title = title;
+    this.director = director;
+    this.producer = producer;
+    this.release_date = release_date;
+  }
+}
+
+class Specie extends Base {
+  constructor(index, name, classification, designation, eye_colors, created) {
+    super(created);
     this.index = index;
     this.name = name;
     this.classification = classification;
@@ -223,8 +256,9 @@ class Specie {
   }
 }
 
-class Starship {
-  constructor(index, name, model, manufacturer, passengers) {
+class Starship extends Base {
+  constructor(index, name, model, manufacturer, passengers, created) {
+    super(created);
     this.index = index;
     this.name = name;
     this.model = model;
@@ -233,12 +267,13 @@ class Starship {
   }
 }
 
-class Vehicle {
-  constructor(index, name, model, manufacturer, cost_in_credits) {
+class Vehicle extends Base {
+  constructor(index, name, model, manufacturer, length, created) {
+    super(created);
     this.index = index;
     this.name = name;
     this.model = model;
     this.manufacturer = manufacturer;
-    this.cost_in_credits;
+    this.length;
   }
 }

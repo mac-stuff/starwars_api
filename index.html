@@ -10,23 +10,13 @@
 
   <body>
     <div id="container">
-      <div>
-        <img src="sw.png" class="logo" />
+      <div id="nav">
+        <img src="logo.png" class="logo" />
+        <div class="buttons" id="buttons"></div>
       </div>
-
-      <div class="buttons" id="buttons">
-        <button class="button-52" id="films">films</button>
-        <button class="button-52" id="people">people</button>
-        <button class="button-52" id="planets">planets</button>
-        <button class="button-52" id="species">species</button>
-        <button class="button-52" id="starships">starships</button>
-        <button class="button-52" id="vehicles">vehicles</button>
-      </div>
-
       <div class="main">
-        <table class="table" width="100%" id="results"></table>
+        <table class="table" id="table-content" width="100%"></table>
       </div>
-      <div id="footer">STAR WARS</div>
       <script src="script.js"></script>
     </div>
   </body>
