@@ -186,8 +186,12 @@ function createHeader(categories) {
     th.setAttribute("class", "th");
     th.innerHTML = category;
     tr.appendChild(th);
-    table.appendChild(tr);
   }
+  const th = document.createElement("th");
+  th.setAttribute("class", "th");
+  th.innerHTML = "";
+  tr.appendChild(th);
+  table.appendChild(tr);
 }
 
 function createContent(categories, object) {
@@ -198,9 +202,15 @@ function createContent(categories, object) {
     td.setAttribute("class", "td");
     td.innerHTML = object[categories[i]];
     tr.appendChild(td);
-    table.appendChild(tr);
   }
+  const button = document.createElement("button");
+  button.setAttribute("class", "button-52");
+  button.innerHTML = "details";
+  tr.appendChild(button);
+  table.appendChild(tr);
 }
+
+function createLeftButtons() {}
 
 function cleanTable() {
   document.getElementById("table-content").innerHTML = "";
@@ -208,7 +218,7 @@ function cleanTable() {
 
 class Base {
   constructor(created) {
-    this.created = created.substring(0, 10);
+    this.created = created.substring(0, 10).split("-").reverse().join("-");
   }
 }
 
