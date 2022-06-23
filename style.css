@@ -20,9 +20,13 @@ body {
 
 .table {
   background: rgba(255, 255, 255, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10;
 }
 
-.button-52 {
+.button-52,
+.delete-button {
   font-size: 16px;
   font-weight: 200;
   letter-spacing: 1px;
@@ -38,7 +42,8 @@ body {
   touch-action: manipulation;
 }
 
-.button-52:after {
+.button-52:after,
+.delete-button:after {
   content: "";
   background-color: #ffe54c;
   width: 100%;
@@ -50,7 +55,8 @@ body {
   transition: 0.2s;
 }
 
-.button-52:hover:after {
+.button-52:hover:after,
+.delete-button:hover:after {
   top: 0px;
   left: 0px;
 }
@@ -58,6 +64,9 @@ body {
 @media (min-width: 768px) {
   .button-52 {
     padding: 13px 50px 13px;
+  }
+  .delete-button {
+    padding: 13px, 50px, 13px;
   }
 }
 

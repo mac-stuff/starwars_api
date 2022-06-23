@@ -1,4 +1,8 @@
-window.onload = createButtons;
+window.onload = init;
+
+function init() {
+  createButtons();
+}
 
 async function createButtons() {
   const result = await fetch(`https://swapi.dev/api/`);
@@ -44,7 +48,7 @@ async function displayResults(value) {
         item.skin_color,
         item.created
       );
-      createContent(categories, person);
+      createContent(categories, person, index);
     });
   }
 
@@ -70,7 +74,7 @@ async function displayResults(value) {
         item.population,
         item.created
       );
-      createContent(categories, planet);
+      createContent(categories, planet, index);
     });
   }
 
@@ -95,7 +99,7 @@ async function displayResults(value) {
         item.release_date,
         item.created
       );
-      createContent(categories, film);
+      createContent(categories, film, index);
     });
   }
 
@@ -121,7 +125,7 @@ async function displayResults(value) {
         item.eye_colors,
         item.created
       );
-      createContent(categories, specie);
+      createContent(categories, specie, index);
     });
   }
 
@@ -147,7 +151,7 @@ async function displayResults(value) {
         item.length,
         item.created
       );
-      createContent(categories, vehicle);
+      createContent(categories, vehicle, index);
     });
   }
 
@@ -173,7 +177,7 @@ async function displayResults(value) {
         item.passengers,
         item.created
       );
-      createContent(categories, starship);
+      createContent(categories, starship, index);
     });
   }
 }
@@ -194,23 +198,27 @@ function createHeader(categories) {
   table.appendChild(tr);
 }
 
-function createContent(categories, object) {
+function createContent(categories, object, index) {
   const table = document.getElementById("table-content");
   const tr = document.createElement("tr");
+  tr.setAttribute("id", `tr-${index}`);
   for (let i = 0; i < categories.length; i++) {
     const td = document.createElement("td");
     td.setAttribute("class", "td");
     td.innerHTML = object[categories[i]];
     tr.appendChild(td);
   }
-  const button = document.createElement("button");
-  button.setAttribute("class", "button-52");
-  button.innerHTML = "details";
-  tr.appendChild(button);
+  const deleteButton = document.createElement("button");
+  deleteButton.setAttribute("class", "delete-button");
+  deleteButton.innerHTML = "delete";
+  tr.appendChild(deleteButton);
   table.appendChild(tr);
-}
 
-function createLeftButtons() {}
+  document.querySelector(".table").addEventListener("click", (e) => {
+    const contentToDelete = document.getElementById(e.target.parentElement.id);
+    contentToDelete.style.display = "none";
+  });
+}
 
 function cleanTable() {
   document.getElementById("table-content").innerHTML = "";
