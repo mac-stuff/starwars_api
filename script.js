@@ -28,156 +28,103 @@ async function displayResults(value) {
 
   if (value === "people") {
     cleanTable();
-
-    const categories = [
-      "index",
-      "name",
-      "height",
-      "birth_year",
-      "skin_color",
-      "created",
-    ];
-    createHeader(categories);
+    createHeader(categories.people);
 
     data.results.forEach((item, index) => {
       const person = new Person(
-        index,
+        index + 1,
         item.name,
         item.height,
         item.birth_year,
         item.skin_color,
         item.created
       );
-      createContent(categories, person, index);
+      createContent(categories.people, person, index);
     });
   }
 
   if (value === "planets") {
     cleanTable();
-
-    const categories = [
-      "index",
-      "name",
-      "orbital_period",
-      "gravity",
-      "population",
-      "created",
-    ];
-    createHeader(categories);
+    createHeader(categories.planets);
 
     data.results.forEach((item, index) => {
       const planet = new Planet(
-        index,
+        index + 1,
         item.name,
         item.orbital_period,
         item.gravity,
         item.population,
         item.created
       );
-      createContent(categories, planet, index);
+      createContent(categories.planets, planet, index);
     });
   }
 
   if (value === "films") {
     cleanTable();
-    const categories = [
-      "index",
-      "title",
-      "director",
-      "producer",
-      "release_date",
-      "created",
-    ];
-    createHeader(categories);
+    createHeader(categories.films);
 
     data.results.forEach((item, index) => {
       const film = new Film(
-        index,
+        index + 1,
         item.title,
         item.director,
         item.producer,
         item.release_date,
         item.created
       );
-      createContent(categories, film, index);
+      createContent(categories.films, film, index);
     });
   }
 
   if (value === "species") {
     cleanTable();
-
-    const categories = [
-      "index",
-      "name",
-      "classification",
-      "designation",
-      "eye_colors",
-      "created",
-    ];
-    createHeader(categories);
+    createHeader(categories.species);
 
     data.results.forEach((item, index) => {
       const specie = new Specie(
-        index,
+        index + 1,
         item.name,
         item.classification,
         item.designation,
         item.eye_colors,
         item.created
       );
-      createContent(categories, specie, index);
+      createContent(categories.species, specie, index);
     });
   }
 
   if (value === "vehicles") {
     cleanTable();
-
-    const categories = [
-      "index",
-      "name",
-      "model",
-      "manufacturer",
-      "length",
-      "created",
-    ];
-    createHeader(categories);
+    createHeader(categories.vehicles);
 
     data.results.forEach((item, index) => {
       const vehicle = new Vehicle(
-        index,
+        index + 1,
         item.name,
         item.model,
         item.manufacturer,
         item.length,
         item.created
       );
-      createContent(categories, vehicle, index);
+      createContent(categories.vehicles, vehicle, index);
     });
   }
 
   if (value === "starships") {
     cleanTable();
-
-    const categories = [
-      "index",
-      "name",
-      "model",
-      "manufacturer",
-      "passengers",
-      "created",
-    ];
-    createHeader(categories);
+    createHeader(categories.starships);
 
     data.results.forEach((item, index) => {
       const starship = new Starship(
-        index,
+        index + 1,
         item.name,
         item.model,
         item.manufacturer,
         item.passengers,
         item.created
       );
-      createContent(categories, starship, index);
+      createContent(categories.starships, starship, index);
     });
   }
 }
@@ -191,10 +138,6 @@ function createHeader(categories) {
     th.innerHTML = category;
     tr.appendChild(th);
   }
-  const th = document.createElement("th");
-  th.setAttribute("class", "th");
-  th.innerHTML = "";
-  tr.appendChild(th);
   table.appendChild(tr);
 }
 
@@ -202,7 +145,7 @@ function createContent(categories, object, index) {
   const table = document.getElementById("table-content");
   const tr = document.createElement("tr");
   tr.setAttribute("id", `tr-${index}`);
-  for (let i = 0; i < categories.length; i++) {
+  for (let i = 0; i < categories.length - 1; i++) {
     const td = document.createElement("td");
     td.setAttribute("class", "td");
     td.innerHTML = object[categories[i]];
@@ -213,12 +156,40 @@ function createContent(categories, object, index) {
   deleteButton.innerHTML = "delete";
   tr.appendChild(deleteButton);
   table.appendChild(tr);
-
-  document.querySelector(".table").addEventListener("click", (e) => {
-    const contentToDelete = document.getElementById(e.target.parentElement.id);
-    contentToDelete.style.display = "none";
-  });
 }
+
+document.querySelector(".table").addEventListener("click", (e) => {
+  const contentToHide = document.getElementById(e.target.parentElement.id);
+  contentToHide.style.display = "none";
+});
+
+document.querySelector("#button-prev").addEventListener("click", (e) => {
+  for (let i = 0; i < 5; i++) {
+    if (i < 5) {
+      const contentToHide = document.getElementById(`tr-${i}`);
+      contentToHide.style.display = "";
+    } else {
+      try {
+        const contentToHide = document.getElementById(`tr-${i}`);
+        contentToHide.style.display = "none";
+      } catch (error) {}
+    }
+  }
+});
+
+document.querySelector("#button-next").addEventListener("click", (e) => {
+  for (let i = 0; i < 10; i++) {
+    if (i < 5) {
+      const contentToHide = document.getElementById(`tr-${i}`);
+      contentToHide.style.display = "none";
+    } else {
+      try {
+        const contentToHide = document.getElementById(`tr-${i}`);
+        contentToHide.style.display = "";
+      } catch (error) {}
+    }
+  }
+});
 
 function cleanTable() {
   document.getElementById("table-content").innerHTML = "";
@@ -295,3 +266,52 @@ class Vehicle extends Base {
     this.length;
   }
 }
+
+const categories = {
+  people: [
+    "index",
+    "name",
+    "height",
+    "birth_year",
+    "skin_color",
+    "created",
+    "",
+  ],
+  planets: [
+    "index",
+    "name",
+    "orbital_period",
+    "gravity",
+    "population",
+    "created",
+    "",
+  ],
+  films: [
+    "index",
+    "title",
+    "director",
+    "producer",
+    "release_date",
+    "created",
+    "",
+  ],
+  species: [
+    "index",
+    "name",
+    "classification",
+    "designation",
+    "eye_colors",
+    "created",
+    "",
+  ],
+  vehicles: ["index", "name", "model", "manufacturer", "length", "created", ""],
+  starships: [
+    "index",
+    "name",
+    "model",
+    "manufacturer",
+    "passengers",
+    "created",
+    "",
+  ],
+};
