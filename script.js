@@ -164,10 +164,10 @@ document.querySelector(".table").addEventListener("click", (e) => {
 });
 
 document.querySelector("#button-prev").addEventListener("click", (e) => {
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 10; i++) {
     if (i < 5) {
-      const contentToHide = document.getElementById(`tr-${i}`);
-      contentToHide.style.display = "";
+      const contentToDisplay = document.getElementById(`tr-${i}`);
+      contentToDisplay.style.display = "";
     } else {
       try {
         const contentToHide = document.getElementById(`tr-${i}`);
@@ -184,8 +184,8 @@ document.querySelector("#button-next").addEventListener("click", (e) => {
       contentToHide.style.display = "none";
     } else {
       try {
-        const contentToHide = document.getElementById(`tr-${i}`);
-        contentToHide.style.display = "";
+        const contentToDisplay = document.getElementById(`tr-${i}`);
+        contentToDisplay.style.display = "";
       } catch (error) {}
     }
   }
